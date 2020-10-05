@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplicationFormation.Models;
+using AutoMapper;
 
 namespace WebApplicationFormation.Controllers
 {
@@ -39,7 +40,10 @@ namespace WebApplicationFormation.Controllers
         // GET: Parcours/Create
         public ActionResult Create()
         {
+            List<Module> modules = db.Modules.ToList();
+            ViewBag.IdModule = new SelectList(modules, "Id", "Resume");
             return View();
+            
         }
 
         // POST: Parcours/Create
@@ -47,16 +51,25 @@ namespace WebApplicationFormation.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,NbHeures")] Parcours parcours)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Designation,NbHeures,IdModule")] ParcoursVM parcoursVm)
         {
             if (ModelState.IsValid)
             {
+                MapperConfiguration config = new MapperConfiguration(cfg => cfg.CreateMap<ParcoursVM, Parcours>());
+                // 2 : créer un Mapper
+                Mapper mapper = new Mapper(config);
+                // 3 : mappage
+                Parcours parcours = mapper.Map<Parcours>(parcoursVm);
+                Module module = db.Modules.SingleOrDefault(x => x.Id == parcoursVm.IdModule);
+                parcours.Modules = new List<Module>();
+                parcours.Modules.Add(module);
+                
                 db.Parcours.Add(parcours);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(parcours);
+            return View(parcoursVm);
         }
 
         // GET: Parcours/Edit/5

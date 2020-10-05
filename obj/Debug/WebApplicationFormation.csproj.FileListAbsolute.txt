@@ -124,4 +124,10 @@ C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\obj
 C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\obj\Debug\WebApplicationFormation.csproj.CopyComplete
 C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\obj\Debug\WebApplicationFormation.dll
 C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\obj\Debug\WebApplicationFormation.pdb
+C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\obj\Debug\WebApplicationFormation.Migrations.InitialCreate.resources
+C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\obj\Debug\WebApplicationFormation.csproj.GenerateResource.cache
+C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\obj\Debug\WebApplicationFormation.Migrations.a.resources
+C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\obj\Debug\WebApplicationFormation.Migrations.b.resources
+C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\bin\AutoMapper.dll
+C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\bin\AutoMapper.xml
 C:\Users\duarte\source\repos\WebApplicationFormation\WebApplicationFormation\obj\Debug\WebApplicationFormation.csprojAssemblyReference.cache

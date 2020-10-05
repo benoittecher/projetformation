@@ -10,52 +10,15 @@ namespace WebApplicationFormation.Models
     public class Session
     {
         [Key]
-        public int Id
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Id { get; set; }
 
-        public DateTime DateDebut
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public DateTime DateDebut { get; set; }
 
-        public DateTime DateFin
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public DateTime DateFin { get; set; }
+        public string Nom { get; set; }
 
-        public string Nom
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int NbInscrits { get; set; }
 
-        public int NbInscrits
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public Parcours Parcours
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public Parcours Parcours { get; set; }
     }
 }

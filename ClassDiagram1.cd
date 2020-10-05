@@ -10,7 +10,7 @@
   <Class Name="WebApplicationFormation.Models.ApplicationDbContext">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAECAAAAAQAAAAAEAACAAAAAAAAAA=</HashCode>
       <FileName>Models\IdentityModels.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -20,31 +20,26 @@
       <HashCode>AAgCAAAAAAAAABAAEAAAAAAAACAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Session.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Parcours" />
-    </ShowAsAssociation>
   </Class>
-  <Class Name="WebApplicationFormation.Models.Parcours">
+  <Class Name="WebApplicationFormation.Models.ParcoursVM">
     <Position X="9.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAQAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Parcours.cs</FileName>
+      <HashCode>AAACAAAAAQAAAAAAAACAAAAQAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ParcoursVM.cs</FileName>
+      <NewMemberFileName>Models\Parcours.cs</NewMemberFileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Modules" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="WebApplicationFormation.Models.Module">
     <Position X="4.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAQAAAQAAAAEAAAAAAAAAAAAAAAAAgAAAAAgAAAA=</HashCode>
+      <HashCode>AAACAQAAAQAAAAEAEAAAAAAAAAAAAAAAgAAAAAgAAAA=</HashCode>
       <FileName>Models\Module.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebApplicationFormation.Models.Stagiaire">
     <Position X="9.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAUAQAgAAAAAAAQAAAAACAAAAAAACAAQQAAAgA=</HashCode>
+      <HashCode>AAACAAAUAQAgAAAAAAAAAAAAACAAAAAAACAAQQAAAgA=</HashCode>
       <FileName>Models\Stagiaire.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

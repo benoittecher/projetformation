@@ -11,28 +11,11 @@ namespace WebApplicationFormation.Models
     public class Parcours
     {
         [Key]
-        public int Id
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Id { get; set; }
 
-        public int NbHeures
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int NbHeures { get; set; }
 
-        public List<Module> Modules
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public string Designation { get; set; }
+        public virtual ICollection<Module> Modules { get; set; }
     }
 }
