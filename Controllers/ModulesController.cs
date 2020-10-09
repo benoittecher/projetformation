@@ -11,17 +11,20 @@ using WebApplicationFormation.Models;
 
 namespace WebApplicationFormation.Controllers
 {
+    [Authorize]
     public class ModulesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Modules
+        [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
             return View(await db.Modules.ToListAsync());
         }
 
         // GET: Modules/Details/5
+        [AllowAnonymous]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,6 +40,7 @@ namespace WebApplicationFormation.Controllers
         }
 
         // GET: Modules/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -47,6 +51,7 @@ namespace WebApplicationFormation.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create([Bind(Include = "Id,Resume,Logo,Prerequis,NbHeures,Objectifs")] Module module)
         {
             if (ModelState.IsValid)
@@ -60,6 +65,7 @@ namespace WebApplicationFormation.Controllers
         }
 
         // GET: Modules/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,6 +85,7 @@ namespace WebApplicationFormation.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Resume,Logo,Prerequis,NbHeures,Objectifs")] Module module)
         {
             if (ModelState.IsValid)
@@ -91,6 +98,7 @@ namespace WebApplicationFormation.Controllers
         }
 
         // GET: Modules/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -108,6 +116,7 @@ namespace WebApplicationFormation.Controllers
         // POST: Modules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Module module = await db.Modules.FindAsync(id);

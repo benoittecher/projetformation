@@ -5,10 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Liste des modules</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if ((Session["roleUtilisateur"] != null) && Session["roleUtilisateur"].Equals("Admin"))
+    {
+        @Html.ActionLink("Ajouter un module", "Create")
+    }
+
 </p>
 <table class="table">
     <tr>
@@ -36,7 +40,7 @@
             @Html.DisplayFor(modelItem => item.Resume)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Logo)
+            <img src="~/Images/@item.Logo" alt="Logo @item.Resume" style="width:4vw;height:4vh;"/>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Prerequis)
@@ -48,9 +52,19 @@
             @Html.DisplayFor(modelItem => item.Objectifs)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+
+            @if ((Session["roleUtilisateur"] != null) && Session["roleUtilisateur"].Equals("Admin"))
+            {
+                @Html.ActionLink("Modifier", "Edit", new { id = item.Id })
+                @Html.Raw(" | ")
+
+                @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })
+                @Html.Raw(" | ")
+
+            }
+
+            @Html.ActionLink("Details", "Details", new { id = item.Id })
+
         </td>
     </tr>
 }

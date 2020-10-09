@@ -12,17 +12,20 @@ using AutoMapper;
 
 namespace WebApplicationFormation.Controllers
 {
+    [Authorize]
     public class ParcoursController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Parcours
+        [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
             return View(await db.Parcours.ToListAsync());
         }
 
         // GET: Parcours/Details/5
+        [AllowAnonymous]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,7 +39,7 @@ namespace WebApplicationFormation.Controllers
             }
             return View(parcours);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Parcours/Create
         public ActionResult Create()
         {
@@ -51,6 +54,7 @@ namespace WebApplicationFormation.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create([Bind(Include = "Id,Designation,NbHeures,IdModule")] ParcoursVM parcoursVm)
         {
             if (ModelState.IsValid)
@@ -71,7 +75,7 @@ namespace WebApplicationFormation.Controllers
 
             return View(parcoursVm);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Parcours/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -84,7 +88,16 @@ namespace WebApplicationFormation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(parcours);
+            List<Module> modules = db.Modules.ToList();
+            ViewBag.IdModule = new SelectList(modules, "Id", "Resume");
+
+            ParcoursVM parcoursVm = new ParcoursVM();
+            parcoursVm.Designation = parcours.Designation;
+            parcoursVm.Id = parcours.Id;
+            parcoursVm.NbHeures = parcours.NbHeures;
+            parcoursVm.Modules = parcours.Modules;
+
+            return View(parcoursVm);
         }
 
         // POST: Parcours/Edit/5
@@ -92,6 +105,7 @@ namespace WebApplicationFormation.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit([Bind(Include = "Id,NbHeures")] Parcours parcours)
         {
             if (ModelState.IsValid)
@@ -104,6 +118,7 @@ namespace WebApplicationFormation.Controllers
         }
 
         // GET: Parcours/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -121,6 +136,7 @@ namespace WebApplicationFormation.Controllers
         // POST: Parcours/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Parcours parcours = await db.Parcours.FindAsync(id);
@@ -137,5 +153,58 @@ namespace WebApplicationFormation.Controllers
             }
             base.Dispose(disposing);
         }
+        /*public async Task<ActionResult> AddModule(int? id)
+        {
+
+        }*/
+        public async Task<ActionResult> RetraitModule(int? IdModule, int? IdParcours)
+        {
+            if (IdModule == null || IdParcours == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Parcours parcours = await db.Parcours.FindAsync(IdParcours);
+            Module module = await db.Modules.FindAsync(IdModule);
+            if (parcours == null || module == null)
+            {
+                return HttpNotFound();
+            }
+            if(parcours.Modules.Any(x => (x.Id == IdModule))){
+                parcours.Modules.Remove(module);
+            }
+            await db.SaveChangesAsync();
+            ParcoursVM parcoursVm = new ParcoursVM();
+            parcoursVm.Designation = parcours.Designation;
+            parcoursVm.Id = parcours.Id;
+            parcoursVm.NbHeures = parcours.NbHeures;
+            parcoursVm.Modules = parcours.Modules;
+            return RedirectToAction("Edit", parcoursVm);
+        }
+        public async Task<ActionResult> AjoutModule(int? IdModule, int? IdParcours)
+        {
+            if (IdModule == null || IdParcours == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Parcours parcours = await db.Parcours.FindAsync(IdParcours);
+            Module module = await db.Modules.FindAsync(IdModule);
+            if (parcours == null || module == null)
+            {
+                return HttpNotFound();
+            }
+            if (!parcours.Modules.Any(x => (x.Id == IdModule)))
+            {
+                parcours.Modules.Add(module);
+            }
+            await db.SaveChangesAsync();
+            ParcoursVM parcoursVm = new ParcoursVM();
+            parcoursVm.Designation = parcours.Designation;
+            parcoursVm.Id = parcours.Id;
+            parcoursVm.NbHeures = parcours.NbHeures;
+            parcoursVm.Modules = parcours.Modules;
+            return RedirectToAction("Edit", parcoursVm);
+            // L'élément sélectionné par défaut doit être resélectionné pour être pris en compte
+        }
+
     }
 }

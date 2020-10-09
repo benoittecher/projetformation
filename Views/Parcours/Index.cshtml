@@ -5,10 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Liste des parcours</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if ((Session["roleUtilisateur"] != null) && Session["roleUtilisateur"].Equals("Admin"))
+    {
+        @Html.ActionLink("Créer un nouveau parcours", "Create")
+    }
 </p>
 <table class="table">
     <tr>
@@ -18,20 +21,99 @@
         <th>@Html.DisplayNameFor(model => model.Designation)</th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.NbHeures)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Designation)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NbHeures)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Designation)
+            </td>
+            <td>
+                @if ((Session["roleUtilisateur"] != null) && Session["roleUtilisateur"].Equals("Admin"))
+                {
+                    @Html.ActionLink("Modifier", "Edit", new { id = item.Id })
+                    @Html.Raw(" | ")
+
+                    @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })
+                    @Html.Raw(" | ")
+
+                }
+
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+
+            </td>
+        </tr>
+    }
 
 </table>
+
+<!--<h2>Liste</h2>
+Html.Grid(Model).Columns(cols =>
+{
+    cols.Add(x => x.Id);
+    cols.Add(x => x.Prenom).Sortable(true);
+    cols.Add(x => x.Mail).Filterable(true);
+    cols.Add(x => x.Photo);
+    cols.Add()
+    .Sanitized(false)
+    .Encoded(false)
+    .RenderValueAs(p => Html.ActionLink("Editer", "Edit", new { id = p.Id }));
+    cols.Add()
+    .Sanitized(false)
+    .Encoded(false)
+    .RenderValueAs(p => "<button class='btn btn-danger btn-supp-adherent' data-id='" + p.Id + "'> <span class='glyphicon glyphicon-trash'/></button>");
+    cols.Add()
+    .Sanitized(false)
+    .Encoded(false)
+    .RenderValueAs(p => "<button class='btn btn-info btn-details-adherent' data-id='" + p.Id + "'> <span class='glyphicon glyphicon-info-sign'/></button>");
+}
+
+).WithPaging(3)*/-->
+<!-- Ajouter un bouton Détail pour chaque ligne -->
+
+
+<!--section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".btn-supp-adherent").click((event) =>
+            {
+                const boutonClique = $(event.target).closest('button');
+                const idRecherche = boutonClique.attr('data-id');
+            /* Appel Ajax au serveur pour invoquer une méthode (action) de suppression de l'id concerné */
+                $.ajax(
+                    {
+                        url: 'Url.Action("DeleteAdherent")',
+                        type: 'POST',
+                        data: { id: idRecherche },
+                        success: (data) => {
+                            if (data.Suppression == "Ok") {
+                                const trASupprimer = boutonClique.closest('tr');
+                                trASupprimer.fadeOut(1000, () => trASupprimer.remove());
+                            }
+                        }
+                    }
+                )
+            });
+        })
+        $(document).ready(function(){
+            $(".btn-details-adherent").click((event) =>
+            {
+                const boutonClique = $(event.target).closest('button');
+                const idRecherche = boutonClique.attr('data-id');
+                $.ajax(
+                    {
+                        url: 'Url.Action("DetailsAdherent")',
+                        type: 'POST',
+                        data: { id: idRecherche },
+                        success: (data) => {
+                            alert(data.Details);
+                        }
+                    }
+                )
+            })
+        })
+    </script>
+}-->

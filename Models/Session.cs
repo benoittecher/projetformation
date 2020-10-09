@@ -11,14 +11,16 @@ namespace WebApplicationFormation.Models
     {
         [Key]
         public int Id { get; set; }
-
+        [Display(Name = "Début")]
+        [DisplayFormat(DataFormatString = "{0:dd MM yyyy}")]
         public DateTime DateDebut { get; set; }
-
+        [Display(Name = "Fin")]
+        [DisplayFormat(DataFormatString = "{0:dd MM yyyy}")]
         public DateTime DateFin { get; set; }
         public string Nom { get; set; }
+        [Display(Name="Nombres de places")]        
+        public int NbPlacesTotal { get; set; }
 
-        public int NbInscrits { get; set; }
-
-        public Parcours Parcours { get; set; }
+        public virtual Parcours Parcours { get; set; }
     }
 }

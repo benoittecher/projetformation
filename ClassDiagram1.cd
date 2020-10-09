@@ -21,20 +21,15 @@
       <FileName>Models\Session.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebApplicationFormation.Models.ParcoursVM">
-    <Position X="9.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAQAAAAAAAACAAAAQAAAAAgAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\ParcoursVM.cs</FileName>
-      <NewMemberFileName>Models\Parcours.cs</NewMemberFileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="WebApplicationFormation.Models.Module">
     <Position X="4.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAQAAAQAAAAEAEAAAAAAAAAAAAAAAgAAAAAgAAAA=</HashCode>
       <FileName>Models\Module.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Parcours" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="WebApplicationFormation.Models.Stagiaire">
     <Position X="9.75" Y="3.75" Width="1.5" />
@@ -46,5 +41,19 @@
       <Property Name="SessionSouhaitee" />
     </ShowAsAssociation>
   </Class>
+  <Class Name="WebApplicationFormation.Models.Parcours">
+    <Position X="9.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAAAAAAAAAAAAQAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Parcours.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Modules" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="System.Collections.Generic.ICollection&lt;T&gt;" Collapsed="true">
+    <Position X="7" Y="0.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

@@ -194,13 +194,24 @@
     <Compile Include="Migrations\202010051412210_b.Designer.cs">
       <DependentUpon>202010051412210_b.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010061209554_parcus.cs" />
+    <Compile Include="Migrations\202010061209554_parcus.Designer.cs">
+      <DependentUpon>202010061209554_parcus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010071156262_places dispo.cs" />
+    <Compile Include="Migrations\202010071156262_places dispo.Designer.cs">
+      <DependentUpon>202010071156262_places dispo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Module.cs" />
+    <Compile Include="Models\ModuleParcours.cs" />
     <Compile Include="Models\Parcours.cs" />
     <Compile Include="Models\ParcoursVM.cs" />
+    <Compile Include="Models\SessionVM.cs" />
+    <Compile Include="Models\StagiaireVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Stagiaire.cs" />
@@ -284,6 +295,9 @@
     <Content Include="Views\Stagiaires\Details.cshtml" />
     <Content Include="Views\Stagiaires\Edit.cshtml" />
     <Content Include="Views\Stagiaires\Index.cshtml" />
+    <Content Include="Views\Home\MentionsLegales.cshtml" />
+    <Content Include="Views\Sessions\PendingCandidaciesAsync.cshtml" />
+    <Content Include="Views\Account\Register2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -310,6 +324,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010051412210_b.resx">
       <DependentUpon>202010051412210_b.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010061209554_parcus.resx">
+      <DependentUpon>202010061209554_parcus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010071156262_places dispo.resx">
+      <DependentUpon>202010071156262_places dispo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -5,10 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Parcours @Model.Designation</h2>
 
 <div>
-    <h4>Parcours</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,8 +19,15 @@
         </dd>
 
     </dl>
+    <p><strong>Liste des modules composant ce parcours : </strong></p>
+    <ul class="no-style">
+        @foreach (WebApplicationFormation.Models.Module module in Model.Modules)
+        {
+        <li><a href="/Modules/Details/@module.Id">@module.Resume</a></li>
+        }
+    </ul>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Retour à la liste des parcours", "Index")
 </p>

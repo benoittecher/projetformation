@@ -23,10 +23,11 @@ namespace WebApplicationFormation.Models
         public string Téléphone { get; set; }
 
         public DateTime DateInscription { get; set; }
-
-        public Session SessionSouhaitee { get; set; }
+        [Display(Name ="Session souhaitée")]
+        public virtual Session SessionSouhaitee { get; set; }
 
         public string Infos { get; set; }
-        public string Statut { get; set; }
+        public string Statut { get; set; } // Attente inscription, Inscription en cours, Inscription finalisée, en cours de
+        // formation, a terminé sa formation, autre
     }
 }

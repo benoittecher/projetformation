@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mon application ASP.NET</title>
@@ -10,7 +10,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" id="menu">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,7 +18,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Formation", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="~/Home/Index" class="navbar-brand" style="display:flex;">
+                    <img src="~/Images/logopolyform.jpg" id="icone-appli" style="margin-right: 2vw; " />
+                    @System.Configuration.ConfigurationManager.AppSettings["NomSite"]
+                </a>
+                
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -31,12 +35,15 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div class="mainBody">
+            @RenderBody()
+        </div>
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Mon application ASP.NET</p>
-        </footer>
     </div>
+    <footer>
+        <p>@Html.ActionLink("Mentions légales", "MentionsLegales", "Home")</p>
+        <p>@Html.ActionLink(System.Configuration.ConfigurationManager.AppSettings["NomSite"], "Index", "Home")</p>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

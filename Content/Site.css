@@ -2,11 +2,51 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
+footer {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: cornflowerblue;
+}
+footer a {
+    color: white;
+}
+#menu {
+    background-color: cornflowerblue;
+}
+#menu a {
+    color: white;
+}
+#titre-module {
+    display: flex;
+    margin-top: 3vh;
+    justify-content: space-evenly;
+}
+#detail{
+    font-size: 20px;
+}
+#detail dt {
+    width: 45%;
+    margin-right: 5%;
+}
+#icone-appli{
+    width: 2.5vw;
+    height: 100%;
+}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+}
+.mainBody {
+    min-height:80vh;
+}
+#eloignes{
+    display: flex;
+    justify-content: space-between;
+}
+#titre-module img{
+    width: 10vh;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -14,6 +54,9 @@
 */
 .dl-horizontal dt {
     white-space: normal;
+}
+.no-style{
+    list-style-type: none;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */

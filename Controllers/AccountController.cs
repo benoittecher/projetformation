@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApplicationFormation.Models;
@@ -17,6 +18,7 @@ namespace WebApplicationFormation.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -79,6 +81,22 @@ namespace WebApplicationFormation.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    using (ApplicationDbContext dbUser = new ApplicationDbContext())
+                    {
+                        // Via le Post on recherche l'id de l'utilisateur
+                        var _connectedUser = dbUser.Users.SingleOrDefault(x => x.Email.Equals(model.Email));
+                        // On cherche l'id du groupe via la table de liaison
+                        var _userRoles = dbUser.Roles.Select(x => x.Users.FirstOrDefault(y => y.UserId.Equals(_connectedUser.Id))).FirstOrDefault(); // on récupère le 1er rôle pour simplifier
+                        if (_userRoles != null)
+                        {
+                            var _role = (dbUser.Roles.Where(x => x.Id.Equals(_userRoles.RoleId)) != null) ? dbUser.Roles.Where(x => x.Id.Equals(_userRoles.RoleId)).FirstOrDefault() : null;
+                            string _UserRole = (_role != null) ? _role.Name : null;
+                            Session["roleUtilisateur"] = _UserRole;
+                            Session["info"] = DateTime.Now;
+                        }
+                        // Session aura une durée de vie égale au temps de connexion
+
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -155,15 +173,65 @@ namespace WebApplicationFormation.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //var _role = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    //var roleManager = new RoleManager<IdentityRole>(_role);
+                    //await roleManager.CreateAsync(new IdentityRole("Admin"));
+                    // On rattache le rôle à un utilisateur
+                    //await UserManager.AddToRoleAsync(user.Id, "Admin");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
                     // Pour plus d'informations sur l'activation de la confirmation de compte et de la réinitialisation de mot de passe, visitez https://go.microsoft.com/fwlink/?LinkID=320771
                     // Envoyer un message électronique avec ce lien
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirmez votre compte", "Confirmez votre compte en cliquant <a href=\"" + callbackUrl + "\">ici</a>");
-
+                    Stagiaire stagiaire = new Stagiaire();
+                    stagiaire.Mail = model.Email;
+                    stagiaire.DateInscription = DateTime.Now;
+                    db.Stagiaires.Add(stagiaire);
+                    db.SaveChanges();
                     return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // Si nous sommes arrivés là, un échec s’est produit. Réafficher le formulaire
+            return View(model);
+        }
+        [AllowAnonymous]
+        public ActionResult Register2(int idCas)
+        {
+            RegisterViewModelVM registerViewModelVM = new RegisterViewModelVM();
+            registerViewModelVM.IdCas = idCas;
+            return View(registerViewModelVM);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register2(RegisterViewModelVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    //var _role = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    //var roleManager = new RoleManager<IdentityRole>(_role);
+                    //await roleManager.CreateAsync(new IdentityRole("Admin"));
+                    // On rattache le rôle à un utilisateur
+                    //await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    // Pour plus d'informations sur l'activation de la confirmation de compte et de la réinitialisation de mot de passe, visitez https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Envoyer un message électronique avec ce lien
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirmez votre compte", "Confirmez votre compte en cliquant <a href=\"" + callbackUrl + "\">ici</a>");
+                    Stagiaire stagiaire = new Stagiaire();
+                    stagiaire.Mail = model.Email;
+                    stagiaire.DateInscription = DateTime.Now;
+                    db.Stagiaires.Add(stagiaire);
+                    db.SaveChanges();
+                    return RedirectToAction("Create", "Stagiaires");
                 }
                 AddErrors(result);
             }

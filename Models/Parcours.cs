@@ -12,10 +12,11 @@ namespace WebApplicationFormation.Models
     {
         [Key]
         public int Id { get; set; }
-
+        [Display(Name ="Nombre d'heures")]
         public int NbHeures { get; set; }
 
         public string Designation { get; set; }
         public virtual ICollection<Module> Modules { get; set; }
+        public virtual ICollection<Session> Sessions { get; set; }
     }
 }
